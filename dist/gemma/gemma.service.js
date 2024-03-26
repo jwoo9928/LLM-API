@@ -19,10 +19,6 @@ let GemmaService = class GemmaService {
     async chat(content) {
         console.log("ask", content);
         const DATA_URL = 'http://localhost:8020/grammer';
-        const chatObj = {
-            model: 'llama2',
-            message: [{ role: 'user', content: "hello" }]
-        };
         const correct_grammer = await axios_1.default.get(DATA_URL + "?text=" + content);
         const response = await ollama_1.default.chat({
             model: 'llama2',
