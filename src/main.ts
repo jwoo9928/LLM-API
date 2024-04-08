@@ -4,11 +4,20 @@ import cluster from 'cluster';
 import os from 'os';
 import { Logger } from '@nestjs/common';
 import { Worker } from 'worker_threads';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-const numCPUs = os.cpus().length;
+const numCPUs = 2// os.cpus().length;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const config = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
   Logger.log(`Worker ${process.pid} started`);
   const worker = new Worker(`
@@ -42,9 +51,11 @@ function setupCluster() {
 }
 
 
-if (cluster.isPrimary) {
-  setupCluster()
-} else {
-  bootstrap();
-}
+// if (cluster.isPrimary) {
+//   setupCluster()
+// } else {
+//   bootstrap();
+// }
+
+bootstrap();
 
