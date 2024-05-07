@@ -1,13 +1,13 @@
 import { Controller, Get, Req } from '@nestjs/common';
-import { GPTService } from './gpt.service';
+import { GeminiService } from './gemini.service';
 import { Request } from 'express';
 import { ApiProperty, ApiQuery } from '@nestjs/swagger';
 import { ChatAI } from 'src/types/llmObjs';
 
 
 @Controller('gpt')
-export class GPTController {
-  constructor(private readonly gptService: GPTService) {}
+export class GeminiController {
+  constructor(private readonly gptService: GeminiService) {}
 
   @ApiQuery({
     name: 'id',

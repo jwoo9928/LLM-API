@@ -14,7 +14,7 @@ const channels = {};
 
 
 @Injectable()
-export class GPTService {
+export class GeminiService {
   async createChannel(id: string): Promise<boolean> {
     try {
       const chat = model.startChat({

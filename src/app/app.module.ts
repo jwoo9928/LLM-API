@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GPTModule } from 'src/gpt/gpt.module';
+import { GeminiModule } from 'src/gemini/gemini.module';
 
 @Module({
-  imports: [ GPTModule],
+  imports: [ GeminiModule],
   controllers: [AppController],
   providers: [AppService],
 })

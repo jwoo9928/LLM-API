@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import cluster from 'cluster';
-import os from 'os';
+import * as notReallyCluster from 'cluster';
+import * as os from 'os';
 import { Logger } from '@nestjs/common';
 import { Worker } from 'worker_threads';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-const numCPUs = 2// os.cpus().length;
+const numCPUs = os.cpus().length;
+const cluster = notReallyCluster as unknown as notReallyCluster.Cluster;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -51,11 +52,9 @@ function setupCluster() {
 }
 
 
-// if (cluster.isPrimary) {
-//   setupCluster()
-// } else {
-//   bootstrap();
-// }
-
-bootstrap();
+if (cluster.isPrimary) {
+  setupCluster()
+} else {
+  bootstrap();
+}
 
