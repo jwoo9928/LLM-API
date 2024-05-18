@@ -1,53 +1,59 @@
-import { Injectable, Req } from '@nestjs/common';
-import Ollama from 'ollama'
-import { ChatAI, ChatObject } from 'src/types/llmObjs';
-import  { GoogleGenerativeAI } from "@google/generative-ai";
-import 'dotenv/config'
+import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
+import { Injectable } from '@nestjs/common';
 import { GEMINI_PROMPTS } from 'src/types/prompts';
-import { splitIntoJSON } from 'src/constants/constants';
-
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI);
-console.log
-const model = genAI.getGenerativeModel({model: 'gemini-pro'})
-const channels = {};
-
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class GeminiService {
-  async createChannel(id: string): Promise<boolean> {
+  private model: GenerativeModel;
+  private channels = new Map<string, any>();
+
+  constructor() {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI);
+    this.model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-pro-latest",
+      systemInstruction: GEMINI_PROMPTS
+    });
+  }
+
+  async createChannel({ id, topic, conv_lan, ex_lan}): Promise<string> {
     try {
-      const chat = model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [{ text: GEMINI_PROMPTS }],
-          },
-          {
-            role: "model",
-            parts: [{ text: "Ok." }],
-          },
-        ],
-        generationConfig: {
-          maxOutputTokens: 30,
-        },
+      const chat = this.model.startChat({
+        history: [],
+        generationConfig: { maxOutputTokens: 256 },
       });
-      channels[id] = chat;
+      const start = await chat.sendMessage(`role:friend
+        topic: ${topic}
+        conv_lan: ${conv_lan}
+        ex_lan: ${ex_lan}`
+      )
+      this.channels.set(id, chat);
+      return start.response.text();
+    } catch (e) {
+      throw new Error(`Failed to create channel: ${e.message}`);
+    }
+  }
+
+  async chat(content: string, id: string): Promise<any> {
+    const chat = this.channels.get(id);
+    if (!chat) {
+      throw new Error("Chat channel not found");
+    }
+    const result = await chat.sendMessage(content);
+    const text = result.response.text()
+    return text
+  }
+
+  async chatTerminate(id: string): Promise<boolean> {
+    try {
+      this.channels.delete(id);
       return true;
     } catch(e) {
-      throw new Error(e)
+      return false;
     }
-
   }
 
-  async chat(content: string, id: string): Promise<ChatAI> {
-    const chat = channels[id];
-    const result = await chat.sendMessage(content);
-    const chatObject: ChatAI = splitIntoJSON(result.response.text())
-    return chatObject
-  }
-
-  async getHistory(): Promise<string> {
-    return '';
+  getHistory(id: string): string {
+    return "Chat history functionality not implemented yet.";
   }
 }
