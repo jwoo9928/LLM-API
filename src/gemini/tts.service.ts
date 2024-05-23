@@ -30,16 +30,30 @@ export class XTTSService {
       language,
       model,
     };
-    const streamResponse = await axios.get(ttsUrl, {
-      responseType: 'stream',
-      params: params
-    });
-    streamResponse.data.on('data', (chunk: Buffer) => {
-      response.write(chunk);
-    });
-    streamResponse.data.on('end', () => {
-      response.end();
-    });
+    try {
+      const streamResponse = await axios.get(ttsUrl, {
+        responseType: 'stream',
+        params: params
+      });
+      const boundary = "TTSBoundary";
+      streamResponse.data.on('data', (chunk) => {
+        response.write(chunk);
+      });
+
+      streamResponse.data.on('end', () => {
+        response.write(`\r\n--${boundary}--`);
+        response.end();
+      });
+
+      streamResponse.data.on('error', (err) => {
+        console.error('Error streaming TTS:', err);
+        response.end();
+      });
+
+    } catch (error) {
+      console.error('Request error:', error);
+      response.status(500).send('Internal Server Error');
+    }
   }
 
 

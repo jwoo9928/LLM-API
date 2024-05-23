@@ -1,35 +1,32 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
-import * as notReallyCluster from 'cluster';
-import * as os from 'os';
-import { Logger } from '@nestjs/common';
-import { Worker } from 'worker_threads';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
-
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app/app.module";
+import * as notReallyCluster from "cluster";
+import * as os from "os";
+import { Logger } from "@nestjs/common";
+import { Worker } from "worker_threads";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule); 
+  const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
-    .setVersion('1.0')
-    .addTag('cats')
+    .setTitle("Cats example")
+    .setDescription("The cats API description")
+    .setVersion("1.0")
+    .addTag("cats")
     .build();
-  const document = SwaggerModule.createDocument(app, config); 
-  SwaggerModule.setup('api', app, document);  
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, document);
 
-  await app.listen(process.env.PORT);  
+  await app.listen(process.env.PORT);
   Logger.log(`Application is running on: http://localhost:${process.env.PORT}`);
 }
 
 bootstrap();
 
-
 // const numCPUs = os.cpus().length;
 // const cluster = notReallyCluster as unknown as notReallyCluster.Cluster;
 // /**
-//  * 
+//  *
 //  * 웹소텟, 스트리밍을 사용하는것이 베스트
 //  *VOIP 서버 부담이 커짐.
 //  */
@@ -76,10 +73,8 @@ bootstrap();
 //   });
 // }
 
-
 // if (cluster.isPrimary) {
 //   setupCluster()
 // } else {
 //   bootstrap();
 // }
-
