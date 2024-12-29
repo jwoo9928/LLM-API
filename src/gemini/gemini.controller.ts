@@ -25,6 +25,7 @@ import { CreateChatDto } from "./dto/create-chat.dto";
 import { GetResponseDto } from "./dto/get-response.dto";
 import axios from "axios";
 import { EXAMPLE_TEST_INPUT } from "src/types/prompts";
+import { Scores } from "src/types/llmObjs";
 
 @Controller("gemini")
 export class GeminiController {
@@ -67,11 +68,11 @@ export class GeminiController {
   @ApiResponse({ status: 200, description: "Response generated successfully." })
   @ApiResponse({ status: 400, description: "Invalid input." })
   async getResponse(
-    @Body() body: { answer: string; id: string },
+    @Body() body: { answer: string; id: string; azure_scores?: Scores[] },
     @Res() clientRes: Response
   ) {
-    const { answer, id } = body;
-    const textResponse = await this.gptService.chat(answer, id);
+    const { answer, id, azure_scores = undefined } = body;
+    const textResponse = await this.gptService.chat(answer, id, azure_scores);
     clientRes.status(HttpStatus.OK).json(textResponse);
     // await this.ttsService.streamFromXTTSToClient({
     //   response: clientRes,
@@ -82,20 +83,33 @@ export class GeminiController {
   }
 
   @ApiTags("chat service")
-  @Delete("terminate/:id") // ':id'를 경로에 추가
+  @Delete("terminate/:id/:scores?") 
   @ApiOperation({ summary: "Terminate a chat channel" })
   @ApiParam({ name: "id", description: "Unique identifier for the chat" })
+  @ApiParam({
+    name: "scores",
+    description: "Scores (optional)",
+    required: false,
+  }) // 'required: false'로 설정
   @ApiResponse({ status: 200, description: "Chat terminated successfully." })
   @ApiResponse({
     status: 404,
     description: "Chat channel not found for this ID.",
   })
-  async terminateChannel(@Param("id") id: string, @Res() clientRes: Response) {
+  async terminateChannel(
+    @Param("id") id: string,
+    @Param("scores") scores: Scores[],
+    @Res() clientRes: Response
+  ) {
     try {
-      console.log("id", id);
-      const result = await this.gptService.chatTerminate(id);
+      console.log("terminate scores: ", scores);
+      const result = await this.gptService.chatTerminate(
+        id,
+        scores || undefined
+      );
       clientRes.status(HttpStatus.OK).json(result);
     } catch (e) {
+      console.log(e);
       throw new NotFoundException("Chat channel not found for this ID.");
     }
   }
