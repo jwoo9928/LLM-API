@@ -1,73 +1,195 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# LLM-API 🤖
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<div align="center">
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Google Gemini](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![LangChain](https://img.shields.io/badge/LangChain-121212?style=for-the-badge&logo=chainlink&logoColor=white)](https://js.langchain.com/)
 
-## Description
+A powerful API service that combines Google's Gemini and LangChain for advanced language processing and learning capabilities.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Features](#features) • [Installation](#installation) • [Usage](#usage) • [API Documentation](#api-documentation) • [Contributing](#contributing)
 
-## Installation
+</div>
+
+## 🎯 Project Role & Purpose
+
+This LLM-API serves as a crucial bridge between language learning applications and advanced AI models, playing several key roles:
+
+| Role | Description |
+|------|------------|
+| 🎓 **Language Learning Platform Backend** | Powers interactive language learning applications with real-time AI-driven conversations |
+| 🔄 **Multi-Model Orchestrator** | Seamlessly integrates and manages multiple AI models (Gemini & LangChain) for optimal language processing |
+| 📊 **Progress Tracking System** | Provides comprehensive analytics and assessment tools for language proficiency evaluation |
+| 🗣️ **Speech Processing Hub** | Handles text-to-speech conversion for pronunciation and listening practice |
+| 🌐 **Cross-Language Bridge** | Facilitates communication between different languages with advanced translation capabilities |
+
+### Key Benefits
+
+- **For Language Learners**: 
+  - Natural conversation practice with AI
+  - Immediate feedback on language usage
+  - Personalized learning paths
+  - Progress tracking and assessment
+
+- **For Developers**:
+  - Ready-to-use API endpoints
+  - Flexible model integration
+  - Scalable architecture
+  - Comprehensive documentation
+
+- **For Educational Institutions**:
+  - Standardized assessment tools
+  - Progress monitoring capabilities
+  - Multi-user support
+  - Data-driven insights
+
+## 🌟 Features
+
+| Feature | Description |
+|---------|------------|
+| 🤖 **Multi-Model Support** | Integrates both Google Gemini and LangChain models |
+| 💬 **Chat System** | Advanced chat functionality with session management |
+| 🎯 **Level Testing** | Language proficiency assessment capabilities |
+| 🗣️ **Text-to-Speech** | Built-in TTS functionality for language learning |
+| 🌍 **Multi-Language** | Support for multiple languages and translations |
+| 📊 **Analytics** | Score tracking and performance analytics |
+
+## 🚀 Installation
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Docker (optional)
+
+### Quick Start
 
 ```bash
-$ yarn install
+# Clone the repository
+git clone https://github.com/yourusername/LLM-API.git
+
+# Install dependencies
+yarn install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start the application
+yarn start:dev
 ```
 
-## Running the app
+### Docker Setup
 
 ```bash
-# development
-$ yarn run start
+# Build the Docker image
+docker build -t llm-api .
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Run the container
+docker run -p 3000:3000 llm-api
 ```
 
-## Test
+## 💻 Usage
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `PORT` | Server port number | Yes |
+| `GEMINI_API_KEY` | Google Gemini API key | Yes |
+| `XTTS_API_URL` | Text-to-Speech API URL | Yes |
+
+## 🔌 API Endpoints
+
+### Chat Service
+
+| Endpoint | Method | Description |
+|----------|---------|------------|
+| `/gemini/create` | POST | Create a new chat session |
+| `/gemini/chat` | POST | Send message and get response |
+| `/gemini/terminate/:id/:scores?` | DELETE | End chat session |
+
+### Level Test Service
+
+| Endpoint | Method | Description |
+|----------|---------|------------|
+| `/gemini/level-test/:user_id?:learn_lan` | GET | Start language level test |
+| `/gemini/test-result/:qna/:learn_lan` | GET | Get test results |
+
+## 📝 Example Usage
+
+```typescript
+// Create a new chat session
+const response = await axios.post('http://localhost:3000/gemini/create', {
+  conv_lan: 'en',
+  ex_lan: 'ko',
+  model: 'gemini-pro',
+  model_id: 'chat-001'
+});
+
+// Send a message
+const chatResponse = await axios.post('http://localhost:3000/gemini/chat', {
+  answer: 'Hello, how are you?',
+  id: response.data.id
+});
+```
+
+## 🏗️ Project Structure
+
+```
+LLM-API/
+├── src/
+│   ├── gemini/         # Gemini integration
+│   ├── langchain/      # LangChain integration
+│   ├── types/          # TypeScript types
+│   ├── constants/      # Constants and configs
+│   └── app/           # Main application code
+├── test/              # Test files
+└── docker/            # Docker configuration
+```
+
+## 🛠️ Development
 
 ```bash
-# unit tests
-$ yarn run test
+# Development
+yarn start:dev
 
-# e2e tests
-$ yarn run test:e2e
+# Production build
+yarn build
+yarn start:prod
 
-# test coverage
-$ yarn run test:cov
+# Run tests
+yarn test
 ```
 
-## Support
+## 📚 API Documentation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Once the application is running, visit:
+- Swagger UI: `http://localhost:3000/api`
+- API Documentation: `http://localhost:3000/api-docs`
 
-## Stay in touch
+## 🤝 Contributing
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Google Gemini Team
+- LangChain Community
+- NestJS Team
+
+---
+
+<div align="center">
+Made with ❤️ by Your Team Name
+</div>
